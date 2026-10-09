@@ -36,5 +36,12 @@ pipeline {
                 }
             }
         }
+
+        stage('Trivy File Scan') {
+            steps {
+                sh 'trivy fs --severity HIGH,CRITICAL --exit-code 0 --format table -o trivy-fs-report.txt Application-Code'
+                archiveArtifacts artifacts: 'trivy-fs-report.txt', allowEmptyArchive: true
+            }
+        }
     }
 }
