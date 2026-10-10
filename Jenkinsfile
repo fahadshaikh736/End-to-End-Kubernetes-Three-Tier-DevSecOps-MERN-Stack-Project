@@ -69,6 +69,22 @@ pipeline {
                 archiveArtifacts artifacts: 'trivy-*-image.txt', allowEmptyArchive: true
             }
         }
+
+        stage('Update Deployment Files') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'github-creds', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
+                    sh '''
+                        git config user.email "jenkins@example.com"
+                        git config user.name "Jenkins"
+                        sed -i "s|three-tier-backend:.*|three-tier-backend:${BUILD_NUMBER}|" Kubernetes-Manifests/backend.yaml
+                        sed -i "s|three-tier-frontend:.*|three-tier-frontend:${BUILD_NUMBER}|" Kubernetes-Manifests/frontend.yaml
+                        git add Kubernetes-Manifests
+                        git diff --cached --quiet || git commit -m "Update image tags to build ${BUILD_NUMBER}"
+                        git push https://${GIT_USER}:${GIT_TOKEN}@github.com/fahadshaikh736/End-to-End-Kubernetes-Three-Tier-DevSecOps-MERN-Stack-Project.git HEAD:main
+                    '''
+                }
+            }
+        }
     }
 
     post {
