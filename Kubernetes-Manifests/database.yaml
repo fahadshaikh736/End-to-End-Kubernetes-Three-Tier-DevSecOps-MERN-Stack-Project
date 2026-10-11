@@ -17,7 +17,7 @@ metadata:
   namespace: three-tier
 spec:
   replicas: 1
-    strategy:
+  strategy:
     type: Recreate
   selector:
     matchLabels:
@@ -30,7 +30,7 @@ spec:
       containers:
         - name: mongodb
           image: mongo:4.4
-                 resources:
+          resources:
             requests:
               cpu: 250m
               memory: 256Mi

@@ -16,7 +16,7 @@ spec:
       containers:
         - name: backend
           image: 797260140066.dkr.ecr.ap-south-1.amazonaws.com/three-tier-backend:5
-           resources:
+          resources:
             requests:
               cpu: 100m
               memory: 128Mi
