@@ -1,0 +1,4 @@
+clusterName: three-tier-eks
+region: ap-south-1
+vpcId: vpc-0de616a0387e7a443
+fullnameOverride: aws-load-balancer-controller
