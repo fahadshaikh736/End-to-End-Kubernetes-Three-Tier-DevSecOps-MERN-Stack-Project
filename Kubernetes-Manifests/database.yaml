@@ -17,6 +17,8 @@ metadata:
   namespace: three-tier
 spec:
   replicas: 1
+    strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: mongodb
@@ -28,6 +30,13 @@ spec:
       containers:
         - name: mongodb
           image: mongo:4.4
+                 resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
           ports:
             - containerPort: 27017
           env:

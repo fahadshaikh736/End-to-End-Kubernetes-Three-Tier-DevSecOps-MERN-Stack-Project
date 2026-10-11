@@ -16,6 +16,13 @@ spec:
       containers:
         - name: frontend
           image: 797260140066.dkr.ecr.ap-south-1.amazonaws.com/three-tier-frontend:5
+                resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
           ports:
             - containerPort: 3000
           env:
